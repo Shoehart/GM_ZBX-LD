@@ -4,9 +4,8 @@
 // @version      0.01 alpha
 // @description  Link między ZBX a LD, do zutomatyzowania kreowania incydentów
 // @author       RShT
-// @match        https://pit-zabbix.net.pp/zabbix.php?action=dashboard.view*
-// @match        https://servicedesk.net.pp/SD_Klient.WebAccess/wd/object/create.rails?class_name=IncidentManagement.Incident&lifecycle_name=NewProcess1111&object_template_name=Nowyszablon2683
-// @match        https://servicedesk.net.pp/SD_Klient.WebAccess/wd/Object/Open.rails?class_name=IncidentManagement.Incident&key=*
+// @match        https://pit-zabbix.*
+// @match        https://servicedesk.*
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant        GM_addStyle
