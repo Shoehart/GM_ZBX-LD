@@ -4,8 +4,6 @@
 // @version      0.01 alpha
 // @description  Link między ZBX a LD, do zutomatyzowania kreowania incydentów
 // @author       RShT
-// @match        https://pit-zabbix.*
-// @match        https://servicedesk.*
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant        GM_addStyle
@@ -17,7 +15,7 @@
 // ==/UserScript==
 
 var hostsDict = {
-    'temp': '10.1.1.1',
+    'temp': 'temp',
 };
 
 function dodajKolumny(){
@@ -29,9 +27,10 @@ function dodajKolumny(){
 }
 
 function daneDoFormularzy(){
-    $('#mainForm-Title').val(GM_getValue('hostIssue'));
-    $('#mainForm-Description2').val(GM_getValue('hostIssue'));
-    $('#mainForm-_UserDisplay').val('Hajdenrajch Marcin');
+    var regulka = GM_getValue('hostIssue');
+    $('#mainForm-Title').val('Veryfication of Zabbix allert');
+    $('#mainForm-Description2').val(regulka);
+    $('#mainForm-_UserDisplay').val('name_surname');
 
     //IP
     $('#mainForm-_AdresIP').val($.trim(GM_getValue('hostIssue').match(/(\d+)\.(\d+)\.(\d+)\.(\d+)\s+/gm)));
@@ -53,7 +52,7 @@ function keyDown(el, eventTxt) {
 }
 
 var adres = window.location.hostname;
-if (adres == 'pit-zabbix.net.pp') {
+if (adres == 'abc.com') {
     waitForKeyElements('table.list-table', dodajKolumny);
 }
 
@@ -62,8 +61,8 @@ $(document).on('click', '#buttonCheck', function() {
     GM_setValue('hostName', row.find('td:eq(0)').text());
     GM_setValue('hostIssue', row.find('td:eq(0)').text() + ' ' + row.find('td:eq(1)').text());
     GM_setValue('levelOfTrigger', row.find('td:eq(1)').attr('class'));
-    GM_setValue('addressOfAck', 'https://pit-zabbix.net.pp/' + $(this).parent().prev().prev().children().attr('href'));
-    window.open("https://servicedesk.net.pp/SD_Klient.WebAccess/wd/object/create.rails?class_name=IncidentManagement.Incident&lifecycle_name=NewProcess1111&object_template_name=Nowyszablon2683", "_blank");
+    GM_setValue('addressOfAck', 'https://abc.com/' + $(this).parent().prev().prev().children().attr('href'));
+    window.open("https://servicedesk.example.com/", "_blank");
 });
 
 // Wait for element to exist.
@@ -126,7 +125,7 @@ function Kategoria(){
 }
 
 adres = window.location.href;
-if (adres == 'https://servicedesk.net.pp/SD_Klient.WebAccess/wd/object/create.rails?class_name=IncidentManagement.Incident&lifecycle_name=NewProcess1111&object_template_name=Nowyszablon2683') {
+if (adres == 'https://servicedesk.example.com/') {
 
     //Zgłaszający
     daneDoFormularzy();
@@ -134,5 +133,5 @@ if (adres == 'https://servicedesk.net.pp/SD_Klient.WebAccess/wd/object/create.ra
     User();
     Pilnosc();
     Usluga();
-    Kategoria();
+    //Kategoria();
 }
